@@ -12,6 +12,9 @@ app.get('/', (req, res) => {
         note: 'Welcome note'
     });
 });
+app.get('/about', (req, res)=>{
+    res.render('about');
+});
 
 app.listen(port, () => {
     console.log('Server started on:', port);
