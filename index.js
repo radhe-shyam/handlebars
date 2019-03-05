@@ -8,7 +8,9 @@ app.engine('handlebars', exphbs({
 app.set('view engine', 'handlebars');
 const port = 5000;
 app.get('/', (req, res) => {
-    res.send('Welcome');
+    res.render('index', {
+        note: 'Welcome note'
+    });
 });
 
 app.listen(port, () => {
