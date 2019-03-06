@@ -45,8 +45,8 @@ app.get('/ideas/add', (req, res) => {
 app.get('/ideas', (req, res) => {
     Idea.find({})
         .sort({ date: "desc" })
-        .find(ideas => {
-            res.render('./ideas/index', ideas);
+        .then(ideas => {
+            res.render('./ideas/index', { ideas });
         })
 });
 

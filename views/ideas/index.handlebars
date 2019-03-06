@@ -1,1 +1,8 @@
-<h1>index page</h1>
+{{#each ideas}}
+<div class="card card-body">
+    <h4>{{title}}</h4>
+    <p>{{details}}</p>
+</div>
+{{else}}
+<p>No Videos listed</p>
+{{/each}}
