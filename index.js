@@ -43,7 +43,6 @@ app.get('/ideas/add', (req, res) => {
 });
 
 app.post('/ideas', (req, res) => {
-    console.log('req.body=>', req.body);
     let errors = [];
 
     if (!req.body.title) {
@@ -62,7 +61,6 @@ app.post('/ideas', (req, res) => {
     } else {
         res.send('passed');
     }
-    res.send('ok');
 });
 
 app.listen(port, () => {
