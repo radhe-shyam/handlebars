@@ -42,6 +42,14 @@ app.get('/ideas/add', (req, res) => {
     res.render('./ideas/add');
 });
 
+app.get('/ideas', (req, res) => {
+    Idea.find({})
+        .sort({ date: "desc" })
+        .find(ideas => {
+            res.render('./ideas/index', ideas);
+        })
+});
+
 app.post('/ideas', (req, res) => {
     let errors = [];
 
