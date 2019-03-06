@@ -1,8 +1,10 @@
 const express = require('express');
+const port = 5000;
 const app = express();
 const exphbs = require('express-handlebars');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const methodOverride = require('method-override');
 
 //load models
 require('./models/Idea');
@@ -28,7 +30,12 @@ app.set('view engine', 'handlebars');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-const port = 5000;
+
+//_method override middleware
+
+app.use(methodOverride('_method'));
+
+//request methods
 app.get('/', (req, res) => {
     res.render('index', {
         note: 'Welcome note'
@@ -86,6 +93,10 @@ app.post('/ideas', (req, res) => {
                 res.redirect('/ideas');
             })
     }
+});
+
+app.put('/ideas/:id', (req, res) => {
+    res.send('PUT');
 });
 
 app.listen(port, () => {
