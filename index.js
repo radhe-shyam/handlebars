@@ -108,7 +108,7 @@ app.put('/ideas/:id', (req, res) => {
 });
 
 app.delete('/ideas/:id', (req, res) => {
-    Idea.remove({ _id: req.params.id })
+    Idea.deleteOne({ _id: req.params.id })
     .then(() => {
         res.redirect('/ideas');
     });
