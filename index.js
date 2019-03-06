@@ -42,6 +42,14 @@ app.get('/ideas/add', (req, res) => {
     res.render('./ideas/add');
 });
 
+app.get('/ideas/edit/:id', (req, res) => {
+    Idea.findOne({
+        _id: req.param.id
+    }).then(idea => {
+        res.render('./ideas/edit', { idea });
+    })
+});
+
 app.get('/ideas', (req, res) => {
     Idea.find({})
         .sort({ date: "desc" })
