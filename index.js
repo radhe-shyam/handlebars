@@ -96,8 +96,23 @@ app.post('/ideas', (req, res) => {
 });
 
 app.put('/ideas/:id', (req, res) => {
-    res.send('PUT');
+    Idea.findOne({
+        _id: req.params.id
+    }).then(idea => {
+        idea.title = req.body.title;
+        idea.details = req.body.details;
+        return idea.save();
+    }).then(() => {
+        res.redirect('/ideas');
+    })
 });
+
+app.delete('/ideas/:id', (req, res) => {
+    Idea.remove({ _id: req.params.id })
+    .then(() => {
+        res.redirect('/ideas');
+    });
+})
 
 app.listen(port, () => {
     console.log('Server started on:', port);
