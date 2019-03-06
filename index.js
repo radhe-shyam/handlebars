@@ -2,24 +2,32 @@ const express = require('express');
 const app = express();
 const exphbs = require('express-handlebars');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 
 //load models
 require('./models/Idea');
 const Idea = mongoose.model('ideas');
 
-//handlebars middleware
 mongoose.connect('mongodb://localhost/vidjot', {
     useNewUrlParser: true
 }).then(() => {
     console.log('Connected to mongo');
 }).catch(err => {
     console.log('Mongo connection failed=>', err);
-})
+});
+
+
+//handlebars middleware
 app.engine('handlebars', exphbs({
     defaultLayout: 'main'
 }));
 
 app.set('view engine', 'handlebars');
+
+//body parser middleware
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 const port = 5000;
 app.get('/', (req, res) => {
     res.render('index', {
@@ -30,8 +38,31 @@ app.get('/about', (req, res) => {
     res.render('about');
 });
 
-app.get('/ideas/add', (req, res)=>{
+app.get('/ideas/add', (req, res) => {
     res.render('./ideas/add');
+});
+
+app.post('/ideas', (req, res) => {
+    console.log('req.body=>', req.body);
+    let errors = [];
+
+    if (!req.body.title) {
+        errors.push({ text: "Please provide the title" });
+    }
+    if (!req.body.details) {
+        errors.push({ text: "Please provide the details" });
+    }
+
+    if (errors.length > 0) {
+        res.render('./ideas/add', {
+            errors: errors,
+            title: req.body.title,
+            details: req.body.details
+        });
+    } else {
+        res.send('passed');
+    }
+    res.send('ok');
 });
 
 app.listen(port, () => {
