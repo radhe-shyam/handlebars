@@ -44,7 +44,7 @@ app.get('/ideas/add', (req, res) => {
 
 app.get('/ideas/edit/:id', (req, res) => {
     Idea.findOne({
-        _id: req.param.id
+        _id: req.params.id
     }).then(idea => {
         res.render('./ideas/edit', { idea });
     })
