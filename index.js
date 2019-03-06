@@ -3,6 +3,11 @@ const app = express();
 const exphbs = require('express-handlebars');
 const mongoose = require('mongoose');
 
+//load models
+require('./models/Idea');
+const Idea = mongoose.model('ideas');
+
+//handlebars middleware
 mongoose.connect('mongodb://localhost/vidjot', {
     useNewUrlParser: true
 }).then(() => {
