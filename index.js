@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const port = 5000;
 const app = express();
 const exphbs = require('express-handlebars');
@@ -18,6 +19,10 @@ mongoose.connect('mongodb://localhost/vidjot', {
 }).catch(err => {
     console.log('Mongo connection failed=>', err);
 });
+
+//public path
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 
 //handlebars middleware
