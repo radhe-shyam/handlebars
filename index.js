@@ -10,6 +10,7 @@ const session = require('express-session');
 const flash = require('connect-flash');
 const ideas = require('./routes/ideas');
 const users = require('./routes/users');
+const passport = require('passport');
 
 
 mongoose.connect('mongodb://localhost/vidjot', {
@@ -19,6 +20,9 @@ mongoose.connect('mongodb://localhost/vidjot', {
 }).catch(err => {
     console.log('Mongo connection failed=>', err);
 });
+
+//passport config
+require('./config/passport')(passport);
 
 //public path
 
