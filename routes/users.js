@@ -38,7 +38,7 @@ router.post('/', async (req, res) => {
     }
 
     if (!req.body.password) {
-        errors.push({ text: 'Please provide the password' })
+        errors.push({ text: 'Please provide the password' });
     }
 
     if (!req.body.password2) {
@@ -63,7 +63,7 @@ router.post('/', async (req, res) => {
             email: req.body.email,
             password: req.body.password,
             password2: req.body.password2
-        })
+        });
     } else {
         let newUser = new User(req.body);
         console.log('newUser=>>', newUser);
@@ -75,8 +75,8 @@ router.post('/', async (req, res) => {
                 await newUser.save();
                 req.flash('success_msg', 'Registered successfully, please login');
                 res.redirect('/users/login');
-            })
-        })
+            });
+        });
     }
 });
 module.exports = router;
