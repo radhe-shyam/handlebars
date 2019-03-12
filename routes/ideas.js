@@ -1,17 +1,18 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
+const { ensureAuthentication } = require('../helper/auth');
 
 //load model
 require('../models/Idea');
 const Idea = mongoose.model('ideas');
 
 
-router.get('/add', (req, res) => {
+router.get('/add', ensureAuthentication, (req, res) => {
     res.render('./ideas/add');
 });
 
-router.get('/edit/:id', (req, res) => {
+router.get('/edit/:id', ensureAuthentication, (req, res) => {
     Idea.findOne({
         _id: req.params.id
     }).then(idea => {
@@ -19,7 +20,7 @@ router.get('/edit/:id', (req, res) => {
     })
 });
 
-router.get('/', (req, res) => {
+router.get('/', ensureAuthentication, (req, res) => {
     Idea.find({})
         .sort({ date: "desc" })
         .then(ideas => {
@@ -27,7 +28,7 @@ router.get('/', (req, res) => {
         })
 });
 
-router.post('/', (req, res) => {
+router.post('/', ensureAuthentication, (req, res) => {
     let errors = [];
 
     if (!req.body.title) {
@@ -58,7 +59,7 @@ router.post('/', (req, res) => {
     }
 });
 
-router.put('/:id', (req, res) => {
+router.put('/:id', ensureAuthentication, (req, res) => {
     Idea.findOne({
         _id: req.params.id
     }).then(idea => {
@@ -71,7 +72,7 @@ router.put('/:id', (req, res) => {
     })
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', ensureAuthentication, (req, res) => {
     Idea.deleteOne({ _id: req.params.id })
         .then(() => {
             req.flash('error_msg', 'Idea removed');
