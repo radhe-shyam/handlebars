@@ -16,12 +16,17 @@ router.get('/edit/:id', ensureAuthentication, (req, res) => {
     Idea.findOne({
         _id: req.params.id
     }).then(idea => {
-        res.render('./ideas/edit', { idea });
+        if (idea.user == req.user.id) {
+            res.render('./ideas/edit', { idea });
+        } else {
+            req.flash("error_msg", "Not authorized");
+            res.redirect('./ideas/');
+        }
     })
 });
 
 router.get('/', ensureAuthentication, (req, res) => {
-    Idea.find({})
+    Idea.find({user: req.user.id})
         .sort({ date: "desc" })
         .then(ideas => {
             res.render('./ideas/index', { ideas });
@@ -47,7 +52,8 @@ router.post('/', ensureAuthentication, (req, res) => {
     } else {
         const newUser = {
             title: req.body.title,
-            details: req.body.details
+            details: req.body.details,
+            user: req.user.id
         };
 
         new Idea(newUser)
