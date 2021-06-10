@@ -66,11 +66,8 @@ router.post('/', async (req, res) => {
         });
     } else {
         let newUser = new User(req.body);
-        console.log('newUser=>>', newUser);
         bcrypt.genSalt(10, async (err, salt) => {
-            console.log('salk=>>>',salt);
             bcrypt.hash(newUser.password, salt, async (err, hash) => {
-                console.log('hast=>>>>',hash);
                 newUser.password = hash;
                 await newUser.save();
                 req.flash('success_msg', 'Registered successfully, please login');

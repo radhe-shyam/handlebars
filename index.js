@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
-const port = 5000;
+const PORT = process.env.PORT || 5000;
+const DB_URL = process.env.DB_URL;
 const app = express();
 const exphbs = require('express-handlebars');
 const mongoose = require('mongoose');
@@ -12,8 +13,7 @@ const ideas = require('./routes/ideas');
 const users = require('./routes/users');
 const passport = require('passport');
 
-
-mongoose.connect('mongodb://localhost/vidjot', {
+mongoose.connect(DB_URL, {
     useNewUrlParser: true
 }).then(() => {
     console.log('Connected to mongo');
@@ -72,7 +72,7 @@ app.use(function (req, res, next) {
 //request methods
 app.get('/', (req, res) => {
     res.render('index', {
-        note: 'Welcome note'
+        note: 'Welcome to vid-idea'
     });
 });
 app.get('/about', (req, res) => {
@@ -82,6 +82,6 @@ app.get('/about', (req, res) => {
 app.use('/ideas', ideas);
 app.use('/users', users);
 
-app.listen(port, () => {
-    console.log('Server started on:', port);
+app.listen(PORT, () => {
+    console.log('Server started on:', PORT);
 })

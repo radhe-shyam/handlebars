@@ -1,10 +1,11 @@
 {
   "name": "handlebars",
   "version": "1.0.0",
-  "description": "handlebars sample",
+  "description": "CRUD app using express, handlebars and mongoose",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -15,7 +16,7 @@
   "bugs": {
     "url": "https://github.com/radhe-shyam/handlebars/issues"
   },
-  "homepage": "https://github.com/radhe-shyam/handlebars#readme",
+  "homepage": "https://vid-idea.herokuapp.com/",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
